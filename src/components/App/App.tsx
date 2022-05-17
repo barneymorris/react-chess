@@ -8,6 +8,7 @@ const App = () => {
   const restart = useCallback(() => {
     const newBoard = new Board();
     newBoard.init();
+    newBoard.addFigures();
     setBoard(newBoard);
   }, []);
 

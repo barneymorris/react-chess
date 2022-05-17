@@ -1,5 +1,5 @@
-import { Cell } from "./../Cell";
-import { Colors } from "./../Colors";
+import { Cell } from "../Cell";
+import { Colors } from "../Colors";
 import { Figure, FigureNames } from "./Figure";
 
 import whiteLogo from "./../../assets/white-rook.png";
