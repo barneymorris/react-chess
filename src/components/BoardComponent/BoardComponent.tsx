@@ -13,7 +13,7 @@ export const BoardComponent: React.FC<Props> = ({ board, setBoard }) => {
       {board.cells.map((row, idx) => (
         <React.Fragment key={idx}>
           {row.map((cell) => (
-            <CellComponent />
+            <CellComponent cell={cell} key={cell.id} />
           ))}
         </React.Fragment>
       ))}
