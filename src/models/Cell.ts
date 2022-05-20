@@ -27,4 +27,12 @@ export class Cell {
     this.avaiable = false;
     this.id = nanoid();
   }
+
+  moveFigure(target: Cell) {
+    if (this.figure && this.figure?.canMove(target)) {
+      this.figure.canMove(target);
+      target.figure = this.figure;
+      this.figure = null;
+    }
+  }
 }
