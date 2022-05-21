@@ -3,6 +3,8 @@ import { Board } from "../../models/Board";
 import { Colors } from "../../models/Colors";
 import { Player } from "../../models/Player";
 import { BoardComponent } from "../BoardComponent/BoardComponent";
+import LostFigures from "../LostFigures/LostFigures";
+import { Timer } from "../Timer/Timer";
 import "./../../styles/styles.css";
 
 const App = () => {
@@ -31,7 +33,7 @@ const App = () => {
 
   return (
     <div className="app">
-      {/* <Timer restart={restart} currentPlayer={currentPlayer} /> */}
+      <Timer restart={restart} currentPlayer={currentPlayer} />
       <BoardComponent
         board={board}
         setBoard={setBoard}
@@ -39,8 +41,8 @@ const App = () => {
         swapPlayer={swapPlayer}
       />
       <div>
-        {/* <LostFigures title="Черные фигуры" figures={board.lostBlackFigures} /> */}
-        {/* <LostFigures title="Белые фигуры" figures={board.lostWhiteFigures} /> */}
+        <LostFigures title="Черные фигуры" figures={board.lostBlackFigures} />
+        <LostFigures title="Белые фигуры" figures={board.lostWhiteFigures} />
       </div>
     </div>
   );
