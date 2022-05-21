@@ -1,59 +1,74 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Board } from "../../models/Board";
 import { Cell } from "../../models/Cell";
+import { Player } from "../../models/Player";
 import { CellComponent } from "../CellComponent/CellComponent";
 
-type Props = {
+interface BoardProps {
   board: Board;
   setBoard: (board: Board) => void;
-};
+  currentPlayer: Player | null;
+  swapPlayer: () => void;
+}
 
-export const BoardComponent: React.FC<Props> = ({ board, setBoard }) => {
+export const BoardComponent: FC<BoardProps> = ({
+  board,
+  setBoard,
+  currentPlayer,
+  swapPlayer,
+}) => {
   const [selectedCell, setSelectedCell] = useState<Cell | null>(null);
 
-  const click = (cell: Cell) => {
+  function click(cell: Cell) {
     if (
       selectedCell &&
       selectedCell !== cell &&
       selectedCell.figure?.canMove(cell)
     ) {
       selectedCell.moveFigure(cell);
+      swapPlayer();
       setSelectedCell(null);
+      updateBoard();
     } else {
-      setSelectedCell(cell);
+      if (cell.figure?.color === currentPlayer?.color) {
+        setSelectedCell(cell);
+      }
     }
-  };
+  }
 
   useEffect(() => {
     highlightCells();
   }, [selectedCell]);
 
-  const highlightCells = () => {
+  function highlightCells() {
     board.highlightCells(selectedCell);
     updateBoard();
-  };
+  }
 
-  const updateBoard = () => {
+  function updateBoard() {
     const newBoard = board.getCopyBoard();
     setBoard(newBoard);
-  };
+  }
 
   return (
-    <div className="board">
-      {board.cells.map((row, idx) => (
-        <React.Fragment key={idx}>
-          {row.map((cell) => (
-            <CellComponent
-              click={click}
-              cell={cell}
-              key={cell.id}
-              selected={
-                selectedCell?.x === cell.x && selectedCell?.y === cell.y
-              }
-            />
-          ))}
-        </React.Fragment>
-      ))}
+    <div>
+      <h3>Текущий игрок {currentPlayer?.color}</h3>
+      <div className="board">
+        {board.cells.map((row, index) => (
+          <React.Fragment key={index}>
+            {row.map((cell) => (
+              <CellComponent
+                click={click}
+                cell={cell}
+                key={cell.id}
+                selected={
+                  cell.x === selectedCell?.x && cell.y === selectedCell?.y
+                }
+              />
+            ))}
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };
